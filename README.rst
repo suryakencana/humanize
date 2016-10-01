@@ -100,3 +100,48 @@ How to add new locale ::
     $ msginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
 
 Where <locale name> is locale abbreviation, eg 'en_GB', 'pt_BR' or just 'ru', 'fr' etc.
+
+## Modified Locale engine
+To setup Internationalization and Localization [2] you need to install Babel and lingua packages in your virtual environment:
+``` python
+(env)$ easy_install Babel lingua
+```
+
+##  Extracting Messages from a Template
+We follow by extracting the messages from a template, run these commands in your project’s directory:
+
+``` python
+(env)$ python setup.py extract_messages
+```
+
+## Initializing the Message Catalog Files
+Then initialize the catalogs for each language that you want to use:
+
+``` python
+(env)$ python setup.py init_catalog -l en
+(env)$ python setup.py init_catalog -l es
+(env)$ python setup.py init_catalog -l it
+```
+
+## Compiling the Message Catalog Files
+Humanize itself ignores the existence of all .po files. For a running application to have translations available, you need to compile the catalogs to .mo files.
+
+Once your catalog files have been translated, run the following command:
+
+``` python
+(env)$ python setup.py compile_catalog
+```
+
+## Updating the catalog files
+As we added another translation string, we need to extract again the messages to the catalog template and update our catalog files:
+
+``` python
+(env)$ python setup.py extract_messages
+(env)$ python setup.py update_catalog
+```
+
+Once again a human translator have to translate the messages, and don't forget to recompile the catalogs files:
+
+``` python
+(env)$ python setup.py compile_catalog
+```
